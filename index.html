@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HomeworkOS</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0f172a">
+</head>
+<body>
+<div class="container">
+  <aside class="sidebar">
+    <h1>📚 HomeworkOS</h1>
+    <nav>
+      <ul>
+        <li id="dashboardBtn">🏠 Dashboard</li>
+        <li id="tasksBtn">📚 Aufgaben</li>
+        <li id="calendarBtn">📅 Kalender</li>
+        <li id="notesBtn">📝 Notizen</li>
+        <li id="statsBtn">📊 Statistik</li>
+        <li id="examBtn">📚 Prüfungen</li>
+        <li id="settingsBtn">⚙️ Einstellungen</li>
+        <li id="backupBtn">☁️ Backup</li>
+        <li id="trashBtn">🗑 Papierkorb</li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <h2 id="pageTitle">🏠 Dashboard</h2>
+    <div class="dashboard-grid" id="dashboardSection">
+      <div class="stat-card">
+        <h3>🔥 Heute</h3>
+        <div class="stat-number" id="todayCount">0</div>
+        <p>Aufgaben</p>
+      </div>
+
+      <div class="stat-card">
+        <h3>📅 Morgen</h3>
+        <div class="stat-number" id="tomorrowCount">0</div>
+        <p>Aufgabe</p>
+      </div>
+
+      <div class="stat-card">
+        <h3>📚 Diese Woche</h3>
+        <div class="stat-number" id="weekCount">0</div>
+        <p>Aufgaben</p>
+      </div>
+
+      <div class="stat-card">
+        <h3>📝 Prüfungen</h3>
+        <div class="stat-number" id="doneCount">0</div>
+        <p>Erledigt</p>
+      </div>
+    </div>
+    <div class="card" id="progressSection">
+      <h3>📈 Fortschritt</h3>
+
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+
+      <p id="progressText">0% erledigt</p>
+    </div>
+
+    <div class="card" id="newTaskSection">
+      <h3>Neue Aufgabe</h3>
+
+      <input type="text" id="taskInput" placeholder="Aufgabe eingeben...">
+
+      <br><br>
+
+      <select id="subjectSelect">
+        <option>📐 Mathe</option>
+        <option>🇬🇧 Englisch</option>
+        <option>📖 Deutsch</option>
+        <option>🧪 Physik</option>
+        <option>🌍 Geographie</option>
+        <option>🇫🇷 Französisch</option>
+        <option>🛠 HOE</option>
+      </select>
+
+      <input type="date" id="dueDate">
+
+      <select id="prioritySelect">
+        <option>🟢 Niedrig</option>
+        <option>🟡 Mittel</option>
+        <option>🔴 Hoch</option>
+      </select>
+
+      <br><br>
+
+      <button id="addButton">➕ Aufgabe hinzufügen</button>
+    </div>
+
+    <div class="card" id="taskSection">
+      <h3>Meine Aufgaben</h3>
+      <div class="task-toolbar" id="taskToolbar" style="display:none;">
+        <label>
+          Filter nach Fach
+          <select id="filterSubjectSelect">
+            <option value="all">Alle Fächer</option>
+            <option value="📐 Mathe">📐 Mathe</option>
+            <option value="🇬🇧 Englisch">🇬🇧 Englisch</option>
+            <option value="📖 Deutsch">📖 Deutsch</option>
+            <option value="🧪 Physik">🧪 Physik</option>
+            <option value="🌍 Geographie">🌍 Geographie</option>
+            <option value="🇫🇷 Französisch">🇫🇷 Französisch</option>
+            <option value="🛠 HOE">🛠 HOE</option>
+          </select>
+        </label>
+        <label>
+          Status
+          <select id="filterStatusSelect">
+            <option value="all">Alle</option>
+            <option value="open">Offen</option>
+            <option value="completed">Erledigt</option>
+          </select>
+        </label>
+        <label>
+          Sortieren nach
+          <select id="sortSelect">
+            <option value="date">Datum</option>
+            <option value="priority">Priorität</option>
+            <option value="subject">Fach</option>
+          </select>
+        </label>
+      </div>
+      <ul id="taskList"></ul>
+    </div>
+
+    <div class="card" id="calendarSection" style="display:none;">
+      <h3>📅 Kalender</h3>
+
+      <div class="calendar-header">
+        <button id="prevMonthBtn">⬅️</button>
+        <h4 id="currentMonth">Juni 2026</h4>
+        <button id="nextMonthBtn">➡️</button>
+      </div>
+
+      <div id="calendarGrid" class="calendar-grid">
+      </div>
+      <ul id="calendarList" style="display:none;"></ul>
+    </div>
+
+    <div class="card" id="notesSection" style="display:none;">
+      <h3>📝 Notizen</h3>
+      <textarea id="notesInput" rows="20" placeholder="Schreibe hier deine Notizen..."></textarea>
+    </div>
+
+    <div class="card" id="statsSection" style="display:none;">
+      <h3>📊 Statistik</h3>
+      <p>✅ Erledigte Aufgaben: <span id="statsDone">0</span></p>
+      <p>📚 Offene Aufgaben: <span id="statsOpen">0</span></p>
+      <p>🔥 Hohe Priorität: <span id="statsHigh">0</span></p>
+      <canvas id="statsChart" width="300" height="300"></canvas>
+    </div>
+
+    <div class="card" id="examSection" style="display:none;">
+      <h3>📚 Prüfungen</h3>
+      <input type="text" id="examInput" placeholder="Prüfung eingeben...">
+      <select id="examSubjectSelect">
+        <option>📘 Allgemein</option>
+        <option>📐 Mathe</option>
+        <option>🇬🇧 Englisch</option>
+        <option>📖 Deutsch</option>
+        <option>🧪 Physik</option>
+        <option>🌍 Geographie</option>
+        <option>🇫🇷 Französisch</option>
+        <option>🛠 HOE</option>
+      </select>
+      <button id="addExamButton">➕ Prüfung hinzufügen</button>
+      <ul id="examList"></ul>
+    </div>
+
+    <div class="card" id="settingsSection" style="display:none;">
+  <h3>⚙️ Einstellungen</h3>
+  <p>🔔 Erinnerungen aktiviert</p>
+  <p>🗑 Erledigte Aufgaben werden nach 24 Stunden gelöscht</p>
+  <p>💾 Daten werden automatisch gespeichert</p>
+</div>
+    <div class="card" id="backupSection" style="display:none;">
+      <h3>☁️ Backup</h3>
+      <p>📤 Exportiere oder importiere deine Daten.</p>
+      <button id="exportBtn">📤 Daten exportieren</button>
+      <input type="file" id="importInput">
+    </div>
+
+    <div class="card" id="trashSection" style="display:none;">
+      <h3>🗑 Papierkorb</h3>
+
+      <button id="emptyTrashBtn">🗑 Papierkorb leeren</button>
+
+      <ul id="trashList">
+        <li>🗑 Papierkorb ist leer</li>
+      </ul>
+    </div>
+  </main>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
